@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import '../styles/signup.scss';
+import '../styles/form.scss';
 const SignUp = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ const SignUp = (props) => {
   }
 
   return (
-    <div id="signup-form">
+    <div id="signup-form" className="input-box">
       <h1>Join Quitr</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-div">
@@ -23,6 +23,7 @@ const SignUp = (props) => {
             type = "text"
             className = "form-input"
             placeholder = "Username"
+            value = {username}
             onChange = {e => setUsername(e.target.value)}
           />
         </div>
@@ -31,6 +32,7 @@ const SignUp = (props) => {
             type = "password"
             className = "form-input"
             placeholder = "Password"
+            value = {password}
             onChange = {e => setPassword(e.target.value)}  
           />
         </div>
@@ -39,6 +41,7 @@ const SignUp = (props) => {
             type = "password"
             className = "form-input"
             placeholder = "Confirm Password"
+            value = {confirmPassword}
             onChange = {e => setConfirmPassword(e.target.value)}
           />
         </div>
