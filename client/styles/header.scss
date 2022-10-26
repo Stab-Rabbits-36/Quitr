@@ -5,9 +5,17 @@
   height: 100px;
   text-align: center;
   font-family: 'Fasthand', cursive;
-  font-size: 45px;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+  margin-top: 3vw;
   img {
     height: 130px;
   }
+
+  .link{
+    font-size: 30px;
+    padding-left: 40px;
+  }
+
 }
