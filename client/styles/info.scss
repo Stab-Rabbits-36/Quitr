@@ -26,7 +26,28 @@
   border: 5px solid #d3e5ee;
   border-radius: 20px;
 }
-.upcomingInfo, h2 {
+
+.leftInfoBody h2 {
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  color: #3f5178;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px;
+  padding: 15px;
+}
+
+
+
+.challengeLabel input {
+  opacity: 1;
+  cursor: pointer;
+  height:1em;
+  width:1em;
+}
+
+
+
+.upcomingInfo {
   font-family: Comic Sans MS, Comic Sans, cursive;
   color: #3f5178;
   font-size: 15px;

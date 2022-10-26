@@ -46,14 +46,11 @@ const Profile = (props) => {
       <CheckIn seen={popup} set={handlePopupClick}/>
       <InformationHeader userBadge={'Novice'} user={fakeUser} habit={habit}/>
       <div className="infoBody">
-<<<<<<< HEAD
-        <ChallengeContainer habit={habit} fact={fact} /> <RightInfoBody />
-=======
->>>>>>> 2c3cf32 (front-end work)
+        <ChallengeContainer habit={habit} /> 
       </div>
     </div>
      
   );
 };
-
+// <ChallengeContainer habit={habit} fact={fact} /> <RightInfoBody />
 export default Profile;

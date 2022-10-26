@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import '../styles/form.scss';
 import Challenge from '../components/Challenge'
 
-// const obj = {
-//   challengeName: 'Call your mom',
+const obj = {
+  challengeName: 'Call your mom',
 
-// }
+}
 
 
 const ChallengeContainer = (props) => {
@@ -26,15 +26,16 @@ const ChallengeContainer = (props) => {
     <div className='leftInfoBody'>
       <h2>Log Your Challenges</h2>
       <div>
-        {userChallenges.map(e => {
-            return(
-              <Challenge  id={challenge_id} challengeName={challengeName} completeDate={completed_on_last_date} />
-            )
-          })
-        }
+      <Challenge challengeName={obj.challengeName} />
       </div>
     </div>
   )
 };
 
+// {userChallenges.map(e => {
+//   return(
+//     <Challenge  id={challenge_id} challengeName={challengeName} completeDate={completed_on_last_date} />
+//   )
+// })
+// }
 export default ChallengeContainer;
