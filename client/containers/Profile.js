@@ -46,10 +46,7 @@ const Profile = (props) => {
       <CheckIn seen={popup} set={handlePopupClick}/>
       <InformationHeader userBadge={'Novice'} user={fakeUser} habit={habit}/>
       <div className="infoBody">
-<<<<<<< HEAD
         <ChallengeContainer habit={habit} fact={fact} /> <RightInfoBody />
-=======
->>>>>>> 2c3cf32 (front-end work)
       </div>
     </div>
      
