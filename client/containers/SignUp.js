@@ -1,9 +1,50 @@
 import React from 'react';
-
-
+import { useState, useEffect } from 'react';
+import '../styles/signup.scss';
 const SignUp = (props) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(username, password, confirmPassword);
+    setUsername('');
+    setPassword('');
+    setConfirmPassword('');
+  }
+
   return (
-    <h1>This is the sign-up page.</h1>
+    <div id="signup-form">
+      <h1>Join Quitr</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="input-div">
+          <input 
+            type = "text"
+            className = "form-input"
+            placeholder = "Username"
+            onChange = {e => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="input-div">
+          <input 
+            type = "password"
+            className = "form-input"
+            placeholder = "Password"
+            onChange = {e => setPassword(e.target.value)}  
+          />
+        </div>
+        <div className="input-div">
+          <input 
+            type = "password"
+            className = "form-input"
+            placeholder = "Confirm Password"
+            onChange = {e => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   )
 }
 
