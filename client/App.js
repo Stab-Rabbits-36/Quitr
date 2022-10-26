@@ -2,10 +2,8 @@ import './styles/app.scss';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Route, Routes } from 'react-router-dom';
-import CheckIn from './components/CheckIn';
-import InformationContainer from './containers/InformationContainer'
+import Profile from './containers/Profile'
 import HeaderBar from "./components/HeaderBar";
-import HabitSelectorContainer from "./containers/HabitSelectorContainer"
 import Login from './containers/Login';
 import SignUp from './containers/SignUp';
 
@@ -34,16 +32,10 @@ const App = () => {
         <div className="forBG">
             <>
             <HeaderBar />
-            <Routes>
-               {/*} <Route path='/' element={
-                    <>
-                        {firstTime ? <HabitSelectorContainer setter={setFirstTime} /> : null}
-                        {!firstTime ? <CheckIn firstTime={firstTime} /> : null}
-                    </>
-                } /> */}
-                <Route path ='/' element={<Login setUser={setUser}/>} />
+            <Routes> 
                 <Route path ='/signup' element={<SignUp />} />
-                <Route path='/info' element={<InformationContainer />} />
+                <Route path='/info' element={<Profile user={user}/>} />
+                <Route path ='/' element={<Login setUser={setUser}/>} />
             </Routes>
             </>
         </div>

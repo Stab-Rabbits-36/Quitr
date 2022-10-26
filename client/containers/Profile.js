@@ -4,12 +4,14 @@ import InformationHeader from '../components/InformationHeader';
 import RightInfoBody from '../components/RightInfoBody';
 import LeftInfoBody from './LeftInfoBody';
 import '../styles/info.scss';
+import CheckIn from '../components/CheckIn';
 
 // This is the main container that will call the backend to pass the result of that information to the child components
-const InformationContainer = (props) => {
+const Profile = (props) => {
   const [habit, changeHabit] = useState();
-  const [user, changeUser] = useState();
+  const [fakeUser, changeUser] = useState();
   const [fact, setFact] = useState();
+  const [popup, setPopup] = useState(true);
 
   useEffect(() => {
     // this calls the backend to get the habit, user, and corresponding fact.
@@ -31,13 +33,15 @@ const InformationContainer = (props) => {
   }, []);
 
   return (
-    <>
-      <InformationHeader user={user} />
+    <div className={`profile`}>
+      <CheckIn seen={popup} setSeen={setPopup}/>
+      <InformationHeader userBadge={'Novice'}user={fakeUser} habit={habit}/>
       <div className="infoBody">
         <LeftInfoBody habit={habit} fact={fact} /> <RightInfoBody />
       </div>
-    </>
+    </div>
+     
   );
 };
 
-export default InformationContainer;
+export default Profile;

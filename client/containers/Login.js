@@ -6,10 +6,12 @@ const Login = (props) => {
   const [userPassword, setUserPassword] = useState('')
 
   const handleSubmit = e => {
+    e.preventDefault();
     console.log(userName, userPassword);
     setUserName('');
     setUserPassword('');
   }
+  
   return (
     <div id='login-body' className='input-box'>
         <h1>Welcome Back</h1>
