@@ -39,8 +39,6 @@ CREATE TABLE public.user_metrics (
 ) WITH(
   OIDS = FALSE
 )
-ALTER TABLE public.user_metrics
-    ADD (CONSTRAINT "user_metrics_pk" FOREIGN KEY ("user_id") REFERENCES public.users("_id"), CONSTRAINT "metrics_pk" FOREIGN KEY ("metric_id") REFERENCES public.metrics("_id"));
 
 CREATE TABLE public.users_habits (
     "_id" number NOT NULL,
@@ -52,5 +50,8 @@ CREATE TABLE public.users_habits (
     OIDS=FALSE
 );
 
-ALTER TABLE public.users_habits
-    ADD (CONSTRAINT "users_pk" FOREIGN KEY ("user_id") REFERENCES public.users("_id"), CONSTRAINT "habits_pk" FOREIGN KEY ("habit_id") REFERENCES public.habits("_id"));
+ALTER TABLE public.user_metrics ADD CONSTRAINT "user_metrics_pk" FOREIGN KEY ("user_id") REFERENCES public.users("_id")
+ALTER TABLE public.user_metrics ADD CONSTRAINT "metrics_pk" FOREIGN KEY ("metric_id") REFERENCES public.metrics("_id");
+
+ALTER TABLE public.users_habits ADD CONSTRAINT "users_pk" FOREIGN KEY ("user_id") REFERENCES public.users("_id")
+ALTER TABLE public.users_habits ADD CONSTRAINT "habits_pk" FOREIGN KEY ("habit_id") REFERENCES public.habits("_id");
