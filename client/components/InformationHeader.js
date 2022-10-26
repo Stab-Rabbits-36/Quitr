@@ -6,10 +6,10 @@ const InformationHeader = (props) => {
     console.log('user: ', props.user);
     return (
         <div className="info-header">
-            <h1>Welcome {props.user ? props.user.first_name  : null} {props.user ? props.user.last_name : null}</h1>
-            <h2>Streak: {props.habit ? props.habit.quitLength.days : null} days</h2>
-            <Link to = "/checkin" className="link bad">Break Your Streak</Link> 
-            <h3>You are a Quitr <strong>{props.userBadge}</strong></h3>
+            <h1>Welcome {props.user.first_name} {props.user.last_name}</h1>
+            <h2>Streak: {props.habit.streak} days</h2>
+            <h3 onClick={props.setPopup} className="bad">Break Your Streak</h3>
+            <h3>You are a Quitr {props.userBadge} with {props.points}</h3>
         </div>
     )
 }
