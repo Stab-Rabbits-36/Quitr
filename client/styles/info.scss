@@ -1,9 +1,12 @@
-
-.infoHeader {
+.info-header {
   font-family: 'Nanum Gothic Coding', monospace;
   text-align: center;
   color: #3f5178;
   margin-top: 40px;
+  
+  h2 {
+    color: #ee805b;
+  }
 }
 
 .infoBody {
@@ -13,6 +16,7 @@
   justify-content: center;
   width: 100%;
 }
+
 .leftInfoBody {
   height: 420px;
   margin-top: 400px;
@@ -21,12 +25,6 @@
   width: 60%;
   border: 5px solid #d3e5ee;
   border-radius: 20px;
-}
-.quitInfo p {
-  font-size: 40px;
-  margin-top: 60px;
-  padding: 15px;
-  color: #ee805b;
 }
 .upcomingInfo {
   font-family: Comic Sans MS, Comic Sans, cursive;
@@ -94,4 +92,9 @@
   border: 0px solid #a3bbce;
   border-radius: 50px;
   box-shadow: 6px 6px #f3e9e9;
+}
+
+.bad{
+  color: rgba(225, 13, 94, 0.969);
+  text-decoration: none;
 }
