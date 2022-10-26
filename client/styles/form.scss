@@ -1,4 +1,4 @@
-#signup-form{
+.input-box{
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -6,6 +6,7 @@
   align-items: center;
   width: 100%;
   font-family: 'Nanum Gothic Coding', monospace;
+  
   h1 {
     color: #3f5178;
   }
