@@ -1,6 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import '../styles/form.scss';
+import Challenge from '../components/Challenge'
+
+const obj = {
+  challengeName: 'Call your mom',
+
+}
 
 
 const ChallengesBox = (props) => {
@@ -11,21 +17,20 @@ const ChallengesBox = (props) => {
     .then(data => {
       /** will return an array of objects with keys: 
        * _id, challenge_id, challenge_name, completed_on_last_date
+       data.map(e =>
       */
       //setUserChallenges = data
     })
     
 
   return(
-    <div id='challenges-box'>
+    <div className='leftInfoBody'>
       <h2>Log Your Challenges</h2>
-      data.map(e => {
-
-      })
-      <Challenge id={challenge_id} name={challenge_name} completeDate={completed_on_last_date}/>
+      
+      <Challenge  challengeName={obj.challengeName} />
     </div>
   )
 
 };
-
+/*<Challenge id={challenge_id} challengeName={obj.challengeName} completeDate={completed_on_last_date}/>*/
 export default ChallengesBox;
