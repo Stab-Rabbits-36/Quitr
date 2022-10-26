@@ -5,7 +5,7 @@ import RightInfoBody from '../components/RightInfoBody';
 import LeftInfoBody from './LeftInfoBody';
 import '../styles/info.scss';
 import CheckIn from '../components/CheckIn';
-import ChallengesBox from './ChallengesBox'
+import ChallengeContainer from './ChallengeContainer'
 
 // This is the main container that will call the backend to pass the result of that information to the child components
 const Profile = (props) => {
@@ -38,7 +38,7 @@ const Profile = (props) => {
       <CheckIn seen={popup} setSeen={setPopup}/>
       <InformationHeader userBadge={'Novice'}user={fakeUser} habit={habit}/>
       <div className="infoBody">
-        <ChallengesBox habit={habit} fact={fact} /> <RightInfoBody />
+        <ChallengeContainer habit={habit} fact={fact} /> <RightInfoBody />
       </div>
     </div>
      

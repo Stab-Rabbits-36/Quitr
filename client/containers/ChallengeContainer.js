@@ -9,7 +9,7 @@ import Challenge from '../components/Challenge'
 // }
 
 
-const ChallengesBox = (props) => {
+const ChallengeContainer = (props) => {
   const [userChallenges, setUserChallenges] = useState([]);
 
   fetch(`/challenges/recent/:user_id`)
@@ -37,4 +37,4 @@ const ChallengesBox = (props) => {
   )
 };
 
-export default ChallengesBox;
+export default ChallengeContainer;
