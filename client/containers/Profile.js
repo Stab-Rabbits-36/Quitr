@@ -1,8 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import InformationHeader from '../components/InformationHeader';
-import RightInfoBody from '../components/RightInfoBody';
-import LeftInfoBody from './LeftInfoBody';
 import '../styles/info.scss';
 import CheckIn from '../components/CheckIn';
 import ChallengeContainer from './ChallengeContainer'
@@ -11,8 +9,18 @@ import ChallengeContainer from './ChallengeContainer'
 const Profile = (props) => {
   const [habit, changeHabit] = useState();
   const [fakeUser, changeUser] = useState();
-  const [fact, setFact] = useState();
-  const [popup, setPopup] = useState(true);
+  const [popup, setPopup] = useState(true); // if the habits streak = 0, do not display
+
+  // setPopup(Boolean(streaks)) - if the streak zero, the popup doesn't come up
+
+  const handlePopupClick = e => {
+    if(e.target.innerHTML === 'Yes'){
+      //FETCH - update streaks to zero 
+      setPopup(false);
+    } else { 
+      setPopup(false);
+    }
+  }
 
   useEffect(() => {
     // this calls the backend to get the habit, user, and corresponding fact.
@@ -35,10 +43,13 @@ const Profile = (props) => {
 
   return (
     <div className={`profile`}>
-      <CheckIn seen={popup} setSeen={setPopup}/>
-      <InformationHeader userBadge={'Novice'}user={fakeUser} habit={habit}/>
+      <CheckIn seen={popup} set={handlePopupClick}/>
+      <InformationHeader userBadge={'Novice'} user={fakeUser} habit={habit}/>
       <div className="infoBody">
+<<<<<<< HEAD
         <ChallengeContainer habit={habit} fact={fact} /> <RightInfoBody />
+=======
+>>>>>>> 2c3cf32 (front-end work)
       </div>
     </div>
      

@@ -6,6 +6,8 @@ const Login = (props) => {
   const [userPassword, setUserPassword] = useState('')
 
   const handleSubmit = e => {
+    // FETCH REQUEST - GET USER INFO 
+    // if false, reset, try again
     e.preventDefault();
     console.log(userName, userPassword);
     setUserName('');
