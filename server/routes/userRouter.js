@@ -12,7 +12,7 @@ router.post('/create', userController.createUser, (req, res) => {
 })
 
 router.post('/verification', userController.verifyUser, (req, res) => {
-  res.status(201).json(res.locals.userExists);
+  res.status(201).json(res.locals.user);
 })
 
 router.get('/', userController.getUser, (req, res, next) => {

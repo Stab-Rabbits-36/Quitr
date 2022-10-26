@@ -31,8 +31,8 @@ userController.verifyUser = async (req, res, next) => {
     const queryString = `SELECT * from public.users WHERE username = $1 AND password = $2;`;
     const values = [username, password];
     const { rows } = await db.query(queryString, values);
-    if (rows[0]) res.locals.userExists = true;
-    else res.locals.userExists = false;
+    const { _id, first_name, last_name } = rows[0];
+    res.locals.user = {_id, first_name, last_name};
     return next();
   } catch (error) {
     return next({
