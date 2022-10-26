@@ -2,14 +2,37 @@ const db = require('../db/dbConnection');
 
 const userController = {};
 
-userController.getUser = async (req, res, next) => {
+userController.createUser = async (req, res, next) => {
   try {
-    const { userId } = req.query;
-    const queryString = 'SELECT * FROM users WHERE user_id = $1;';
-    const values = [userId];
+    const { username, password, first_name, last_name} = req.body;
+    if (typeof username !== 'string') throw new Error ('username should be a string');
+    const insert = `INSERT INTO public.users VALUES(DEFAULT, '${username}', '${password}', '${first_name}', '${last_name}');`;
+    await db.query(insert);
+    const queryString = `SELECT * from public.users WHERE username = $1;`;
+    const values = [username];
     const { rows } = await db.query(queryString, values);
     res.locals.user = rows[0];
+    return next();
+  } catch (err) {
+    return next({
+      log: `Usercontroller.js: ERROR: ${err}`,
+      status: 400,
+      message: {
+        err: `An error occurred in userController.createUser. Check server logs for more details - ${error.log}`,
+      },
+    });
+  }
+};
 
+userController.verifyUser = async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) return next ('Missing username or password in userController.verifyUser');
+  try {
+    const queryString = `SELECT * from public.users WHERE username = $1 AND password = $2;`;
+    const values = [username, password];
+    const { rows } = await db.query(queryString, values);
+    const { _id, first_name, last_name } = rows[0];
+    res.locals.user = {_id, first_name, last_name};
     return next();
   } catch (error) {
     return next({
@@ -17,34 +40,36 @@ userController.getUser = async (req, res, next) => {
       message: {
         err: error.message,
       },
-      log: `Error in userController getUser middleware - ${error.log}`,
+      log: `An error occurred in userController.getUser. Check server logs for more details - ${error.log}`,
     });
   }
 };
 
-userController.getFact = async (req, res, next) => {
+userController.getUser = async (req, res, next) => {
   try {
-    const { userId, factId } = req.query;
-    console.log('BODY', req.query);
-
-    const str = `day_${factId}`;
-    const queryString = 'SELECT * FROM facts f WHERE f.fact_id = $1;';
-    const values = [str];
+    const { username } = req.body;
+    const queryString = `SELECT * from public.users WHERE username = $1;`;
+    const values = [username];
     const { rows } = await db.query(queryString, values);
-    console.log(rows[0]);
-    res.locals.fact = rows[0];
-
+    res.locals.user = rows[0];
     return next();
   } catch (error) {
     return next({
-      status: 400,
+      status: error.status,
       message: {
         err: error.message,
       },
-      log: `Error in userController getUser middleware - ${error.log}`,
+      log: `An error occurred in userController.getUser. Check server logs for more details - ${error.log}`,
     });
   }
 };
+
+// const { userId } = req.query;
+// const queryString = 'SELECT * FROM users WHERE user_id = $1;';
+// const values = [userId];
+// const { rows } = await db.query(queryString, values);
+// res.locals.user = rows[0];
+
 // Insert Queries for facts table:
 //  'INSERT INTO Facts (day_1) VALUES ('Your oxygen levels begin to return to normal, whilst nicotine and carbon monoxide levels in your blood decrease by over 50%');';
 //  'INSERT INTO Facts (day_2) VALUES ('You should start to notice an improved sense of taste and smell. As nicotine levels become depleted, the side effects of nicotine withdrawal such as anxiety and irritability might start to creep in.');';
