@@ -1,0 +1,28 @@
+#signup-form{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-family: 'Nanum Gothic Coding', monospace;
+  h1 {
+    color: #3f5178;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #d3e5ee;
+    border-radius: 20px;
+    padding: 20px;
+    .form-input{
+      width: 30vw;
+      padding: 10px;
+      margin: 10px;
+    }
+  }
+
+}
