@@ -1,0 +1,97 @@
+
+.infoHeader {
+  font-family: 'Nanum Gothic Coding', monospace;
+  text-align: center;
+  color: #3f5178;
+  margin-top: 40px;
+}
+
+.infoBody {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.leftInfoBody {
+  height: 420px;
+  margin-top: 400px;
+  position: absolute;
+  left: 20px;
+  width: 60%;
+  border: 5px solid #d3e5ee;
+  border-radius: 20px;
+}
+.quitInfo p {
+  font-size: 40px;
+  margin-top: 60px;
+  padding: 15px;
+  color: #ee805b;
+}
+.upcomingInfo {
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  color: #3f5178;
+  font-size: 15px;
+  margin: 10px;
+  padding: 15px;
+}
+.upcomingInfo li {
+  text-align: center;
+  list-style: none;
+  color: #3f5178;
+}
+.healthBenefits p {
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 20px;
+  color: #3f5178;
+  padding: 40px;
+}
+.left-up {
+  display: flex;
+}
+
+
+
+.rightInfoBody {
+  /* background-color: #d3e5ee; */
+  height: 420px;
+  margin-top: 400px;
+  position: absolute;
+  right: 20px;
+  width: 30%;
+  border: 5px solid #d3e5ee;
+  border-radius: 20px;
+}
+.rightInfoBody h1 {
+  margin-top: 50px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 20px;
+}
+.rightInfoBody li {
+  list-style: none;
+  text-align: center;
+  font-family: Comic Sans MS, Comic Sans, cursive;
+  font-size: 20px;
+  color: #3f5178;
+  margin-top: 20px;
+}
+.rightInfoBody button {
+  text-align: center;
+  height: 40px;
+  width: 120px;
+  font-family: 'Nanum Gothic Coding', monospace;
+  font-size: 25px;
+  background-color: #f3e9e9;
+  border: 0px solid #f3e9e9;
+  border-radius: 50px;
+  box-shadow: 6px 6px #a3bbce;
+  margin-top: 50px;
+  margin-left: 30%;
+}
+.rightInfoBody button:hover {
+  background-color: #a3bbce;
+  border: 0px solid #a3bbce;
+  border-radius: 50px;
+  box-shadow: 6px 6px #f3e9e9;
+}

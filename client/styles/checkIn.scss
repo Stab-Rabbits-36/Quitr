@@ -1,0 +1,21 @@
+.checkIn h1 {
+  color: #000;
+  text-align: center;
+  text-shadow: 4px 2px #cbbccf;
+  font-family: 'Nanum Gothic Coding', monospace;  
+  font-size: 45px;
+}
+.checkIn {
+  color: #eaded3;
+  margin-top: 80px;
+}
+.checkInButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkInButtons button {
+  height: 50px;
+  width: 80px;
+  margin-right: 30px;
+}

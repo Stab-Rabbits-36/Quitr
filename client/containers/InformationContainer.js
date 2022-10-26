@@ -1,8 +1,9 @@
-import axios, { AxiosHeaders } from 'axios';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import InformationHeader from '../components/InformationHeader';
 import RightInfoBody from '../components/RightInfoBody';
 import LeftInfoBody from './LeftInfoBody';
+import '../styles/info.scss';
 
 // This is the main container that will call the backend to pass the result of that information to the child components
 const InformationContainer = (props) => {

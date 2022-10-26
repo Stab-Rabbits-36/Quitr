@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {useEffect} from 'react';
 import axios from 'axios';
+import '../styles/checkIn.scss';
 
 const CheckIn = props => {
-
   useEffect(() => {
     async function checkedInCheck() {
       const { data } = await axios.get('/api/habit/1');
