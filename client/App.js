@@ -7,13 +7,19 @@ import HeaderBar from "./components/HeaderBar";
 import Login from './containers/Login';
 import SignUp from './containers/SignUp';
 
+
+
 const App = () => {
     const [user, setUser] = useState({});
 
+    const logout = e => {
+        setUser({});
+        console.log(user);
+    }
     return (
         <div className="forBG">
             <>
-                <HeaderBar />
+                <HeaderBar logout={logout} user={user}/>
                 <Routes> 
                     <Route path ='/signup' element={<SignUp />} />
                     <Route path='/info' element={<Profile user={user}/>} />
