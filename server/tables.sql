@@ -77,7 +77,7 @@ CREATE TABLE public.user_challenges (
   "user_id" integer NOT NULL,
   "challenge_id" integer NOT NULL,
   "frequency" integer NOT NULL,
-  "last_date_assigned" date NOT NULL,
+  "last_date_assigned" varchar NOT NULL,
   "completed_on_last_date" boolean NOT NULL,
   CONSTRAINT "user_challenges_pk" PRIMARY KEY ("_id")
 ) WITH (
