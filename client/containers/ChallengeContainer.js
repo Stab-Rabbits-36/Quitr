@@ -18,10 +18,10 @@ const ChallengeContainer = (props) => {
       setUserBadges([imgArray[0], imgArray[1]])
     }else if(points > 499 && points < 750){
       setUserBadges([imgArray[0], imgArray[1], imgArray[2]])
-    }else if(points <=750){
+    }else if(points >= 750){
       setUserBadges([imgArray[0], imgArray[1], imgArray[2], imgArray[3]])
     }
-  }, []);
+  }, [props.points]);
   return(
     <div className='leftInfoBody'>
       <h2>Log Your Challenges</h2>
