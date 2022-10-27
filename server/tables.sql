@@ -104,6 +104,24 @@ ALTER TABLE public.user_habits ADD CONSTRAINT "badges_fk2" FOREIGN KEY ("badge_i
 ALTER TABLE public.user_challenges ADD CONSTRAINT "user_challenges_fk0" FOREIGN KEY ("challenge_id") REFERENCES public.challenges("_id");
 ALTER TABLE public.user_challenges ADD CONSTRAINT "users_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
 
+INSERT INTO public.badges VALUES (1, 'Level 1', 0);
+INSERT INTO public.badges VALUES (2, 'Level 2', 250);
+INSERT INTO public.badges VALUES (3, 'Level 3', 500);
+INSERT INTO public.badges VALUES (4, 'Level 4', 750);
+INSERT INTO public.badges VALUES (5, 'Level 5', 1000);
+
+INSERT INTO public.habits VALUES (1, 'Nicotine', 'Nicotine dependence occurs when you need nicotine and cannot stop using it.');
+
+-- STRETCH FEATURE: cigarettes per day for name
+
+CREATE TABLE public.habits (
+  "_id" serial NOT NULL,
+  "name" varchar NOT NULL,
+  "description" varchar NOT NULL,
+  CONSTRAINT "habits_pk" PRIMARY KEY ("_id")    
+) WITH (
+
+
 -- INSERT public.users VALUES(1, "da568", "1234", "Daniel", "An")
 
 -- INSERT public.metrics VALUES (1, "")

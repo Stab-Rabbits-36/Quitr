@@ -1,3 +1,4 @@
+// const { unstable_createtaticHandler } = require('@remix-run/router');
 const db = require('../db/dbConnection');
 
 const userController = {};
@@ -64,11 +65,34 @@ userController.getUser = async (req, res, next) => {
   }
 };
 
-// const { userId } = req.query;
-// const queryString = 'SELECT * FROM users WHERE user_id = $1;';
-// const values = [userId];
-// const { rows } = await db.query(queryString, values);
-// res.locals.user = rows[0];
+userController.createUserHabit = async (req, res, next) => {
+  try {
+    console.log('entering createUserHabit');
+    const {user_id, habit_id} = req.body;
+    const insert = `INSERT INTO public.user_habits VALUES (${user_id}, ${habit_id}, 1, ${Date.now()}, 0, 0);`; // setting novice as badge_id = 1 which will be our lowest level
+    const values = [user_id, habit_id];
+    await db.query(insert);
+    console.log('got past query')
+    const queryString = `SELECT * FROM public.user_habits WHERE user_id = $1;`;
+    console.log(queryString);
+    console.log('got to before 2nd db.query')
+    const { rows } = await db.query(queryString, values);
+    console.log('got past 2nd db query')
+    res.locals.user = rows[0];
+    console.log('got to end of createUserHabit');
+    return next();
+  } catch (error) {
+    return next({
+      status: error.status,
+      message: {
+        err: error.message,
+      },
+      log: `An error occurred in userController.createUserHabit. Check server logs for more details - ${error.log}`,
+    });
+  }
+};
+
+module.exports = userController;
 
 // Insert Queries for facts table:
 //  'INSERT INTO Facts (day_1) VALUES ('Your oxygen levels begin to return to normal, whilst nicotine and carbon monoxide levels in your blood decrease by over 50%');';
@@ -76,5 +100,3 @@ userController.getUser = async (req, res, next) => {
 //  'INSERT INTO Facts (day_3) VALUES ('Your lungs begin to relax and breathing should be easier. Nicotine is completely eliminated from the body and as a result nicotine withdrawal symptoms will have reached their peak.');';
 //  'INSERT INTO Facts (day_7) VALUES ('The average smoker will begin to notice a reduction in the number of nicotine cravings experienced in a day (you’re getting there!)');';
 //  'INSERT INTO Facts (day_14) VALUES ('Your circulation starts to improve. You may notice that physical activity becomes a lot easier. You’ll be free of the addiction and any psychological effects of withdrawal should have ended.');';
-
-module.exports = userController;
