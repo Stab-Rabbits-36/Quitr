@@ -64,10 +64,10 @@ const Profile = (props) => {
   const checkChallenge = e => {
     // fetch to update points
     // fetch to update completed_on_last_date
-    console.log(e.target);
+    console.log(e);
     const update = [ ...challenges ];
-    
-    
+    update[e.target.id].completed_on_last_date = true;
+    setChallenges(update);
   }
 
   useEffect(() => {
