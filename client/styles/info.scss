@@ -26,7 +26,7 @@
   border: 5px solid #d3e5ee;
   border-radius: 20px;
 }
-.upcomingInfo {
+.upcomingInfo, h2 {
   font-family: Comic Sans MS, Comic Sans, cursive;
   color: #3f5178;
   font-size: 15px;
@@ -87,6 +87,7 @@
   margin-top: 50px;
   margin-left: 30%;
 }
+
 .rightInfoBody button:hover {
   background-color: #a3bbce;
   border: 0px solid #a3bbce;

@@ -1,16 +1,18 @@
 import React from 'react';
-import { useState } from 'react';
-
+import HabitSelector from '../containers/HabitSelectorContainer';
 import '../styles/checkIn.scss';
 
 const CheckIn = props => {
+  console.log(props.streak);
   return (
-    <div className={props.seen.toString()}>
-      <h1>Have you used nicotine today?</h1>
-      <div className="checkInButtons">
-        <button onClick={e => props.setSeen(false)}>Yes</button>
-        <button onClick={e => props.setSeen(false)}>No :(</button>
-      </div>
+    <div className={`popup ${props.seen.toString()}`}>
+        <div>
+          <h1>Have you used nicotine today?</h1>
+          <div className="checkInButtons">
+            <button onClick={props.set}>Yes</button>
+            <button onClick={props.set}>No</button>
+          </div>
+        </div> 
     </div>
   );
 };

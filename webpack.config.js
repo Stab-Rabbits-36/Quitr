@@ -15,7 +15,7 @@ module.exports = env => {
       historyApiFallback: true,
       hot: true,
       proxy: {
-        '/api': 'http://localhost:3000',
+        '/': 'http://localhost:3000',
       },
     },
     plugins: [

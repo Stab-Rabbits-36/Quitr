@@ -1,15 +1,35 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/form.scss';
 const Login = (props) => {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('')
-
+  const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(userName, userPassword);
-    setUserName('');
-    setUserPassword('');
+    fetch('user/verification', {
+      method: 'POST',
+      body: JSON.stringify({
+        username: userName,
+        password: userPassword
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }
+    }).then(data => data.json())
+      .then(data => {
+        if(data) {
+          props.setUser(data)
+          navigate('/info');
+        } else {
+          alert('Incorrect username and password.');
+        }
+        setUserName('');
+        setUserPassword('');
+      })
+
+
   }
   
   return (
