@@ -19,7 +19,7 @@ const Profile = (props) => {
   const [habit, setHabit] = useState({
     habit_name: 'default',
     badge_name: 'novice',
-    points: 50,
+    points: 750,
     points_for_next_badge: 500,
     streak: 0,
   });
@@ -71,7 +71,7 @@ const Profile = (props) => {
       {habit.streak ? <CheckIn streak={habit.streak} seen={popup} set={handlePopupClick} />:null}
       <InformationHeader setPopup={setPopup} userBadge={habit.badge_name} user={props.user} habit={habit} />
       <div className="infoBody">
-          <ChallengeContainer check={checkChallenge} challenges={challenges} /> 
+          <ChallengeContainer check={checkChallenge} challenges={challenges} points={habit.points} /> 
           <ChartContainer points={habit.points} />
       </div> 
     </div>
