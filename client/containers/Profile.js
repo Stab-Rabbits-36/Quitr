@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import InformationHeader from '../components/InformationHeader';
 import '../styles/info.scss';
 import CheckIn from '../components/CheckIn';
-import ChallengeContainer from './ChallengeContainer'
+import ChallengeContainer from './ChallengeContainer';
+import ChartContainer from './ChartContainer'
 
 // This is the main container that will call the backend to pass the result of that information to the child components
 const Profile = (props) => {
@@ -70,8 +71,9 @@ const Profile = (props) => {
       {habit.streak ? <CheckIn streak={habit.streak} seen={popup} set={handlePopupClick} />:null}
       <InformationHeader setPopup={setPopup} userBadge={habit.badge_name} user={props.user} habit={habit} />
       <div className="infoBody">
-        <ChallengeContainer check={checkChallenge} challenges={challenges} /> 
-      </div>
+          <ChallengeContainer check={checkChallenge} challenges={challenges} /> 
+          <ChartContainer points={habit.points} />
+      </div> 
     </div>
      
   );

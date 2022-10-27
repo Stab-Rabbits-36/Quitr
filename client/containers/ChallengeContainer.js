@@ -21,4 +21,10 @@ const ChallengeContainer = (props) => {
   )
 };
 
+// {userChallenges.map(e => {
+//   return(
+//     <Challenge  id={challenge_id} challengeName={challengeName} completeDate={completed_on_last_date} />
+//   )
+// })
+// }
 export default ChallengeContainer;
