@@ -1,14 +1,13 @@
 const formatDate = dateObj => {
     //converts date object to this format: '2022/09/22 06:00' (ex)
     const timeStamp = new Date(); //Oi, Remember that date object month is 0 based, so "09" is October
-    let hours = timeStamp.getHours().toString();
-    let day = timeStamp.getDate().toString();
-    let month = timeStamp.getMonth().toString();
-    const year = timeStamp.getFullYear().toString();
+    let day = timeStamp.getUTCDate().toString();
+    let month = (timeStamp.getUTCMonth() + 1).toString();
+    const year = timeStamp.getUTCFullYear().toString();
     if (day.length < 2) day = `0${day}`;
     if (month.length < 2) month = `0${month}`;
-    return `${year}/${month}/${day} ${hours}:00`;
-};
+    return `${year}/${month}/${day}`;
+  };
   
 const calculateDayDiff = (oldDate, newDate) => {
     //calculates difference down to the day & hour between formatted dates innit

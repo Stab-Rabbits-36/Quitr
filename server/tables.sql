@@ -77,7 +77,7 @@ CREATE TABLE public.user_challenges (
   "user_id" integer NOT NULL,
   "challenge_id" integer NOT NULL,
   "frequency" integer NOT NULL,
-  "last_date_assigned" varchar NOT NULL,
+  "last_date_assigned" varchar,
   "completed_on_last_date" boolean NOT NULL,
   CONSTRAINT "user_challenges_pk" PRIMARY KEY ("_id")
 ) WITH (
@@ -101,6 +101,8 @@ ALTER TABLE public.user_habits ALTER COLUMN streak SET NOT NULL;
 ALTER TABLE public.user_habits ALTER COLUMN date_started TYPE varchar SET NOT NULL;
 
 ALTER TABLE public.user_habits ALTER COLUMN streak TYPE integer USING (streak::integer);
+
+ALTER TABLE public.user_challenges ALTER COLUMN last_date_assigned DROP NOT NULL; -- how to drop not null
 
 -- ALTER TABLE public.user_habits ALTER COLUMN date_started TYPE varchar;
 -- DROP TABLE public.badges CASCADE;

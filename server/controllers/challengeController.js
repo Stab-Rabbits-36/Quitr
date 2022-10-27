@@ -8,13 +8,19 @@ challengeController.getChallenges = async (req, res, next) => {
     const {user_id} = req.params;
     const search = `SELECT * from user_challenges WHERE user_id = $1 AND last_date_assigned = '${dateHelper.formatDate()}'`
     const values = [user_id];
-    const {rows} = await db.query(search, values);
-    res.locals.threeChallenges = rows[0];
-    return next();
-    // look for three challenges that have todays date
-    // if present, return those challenges
-    // otherwise, pick 3 challenges and change the date to today and the completed_on_last_date variable to false
-    //save returned 3 objects in an array
+    db.query(search, values)
+      .then(data => {
+        if(data.rows.length === 0) {
+          const create = `UPDATE user_challenges SET last_date_assigned = '${dateHelper.formatDate()}', completed_on_last_date = false WHERE user_id = ${user_id} LIMIT 3`
+          const { rows } = db.query(create)
+          .then(data => {
+            db.query(search, values);
+            res.locals.threeChallenges = data.rows;
+          })
+        } 
+        res.locals.threeChallenges = data.rows;
+        return next();
+      })
   } catch (error) {
     return next({
       status: error.status,
