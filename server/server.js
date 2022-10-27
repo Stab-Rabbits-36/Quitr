@@ -19,13 +19,11 @@ app.use((req, res, next) => {
 
 const userRouter = require('./routes/userRouter'); //routes requests to /api/user to userRouter
 const habitRouter = require('./routes/habitRouter')
-const badgeRouter = require('./routes/badgeRouter')
 const challengeRouter = require('./routes/challengeRouter')
 // const metricRouter = require('./routes/metricRouter'); // stretch feature
 
 app.use('/user', userRouter); //routes requests to /user to userRouter
 app.use('/habit', habitRouter);
-app.use('/badge', badgeRouter);
 app.use('/challenge', challengeRouter);
 // app.use('/metric', metricRouter); // stretch feature
 

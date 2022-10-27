@@ -8,6 +8,10 @@ router.post('/create', habitController.createHabit, (req, res) => {
   res.status(200).json(res.locals.habit); //creates a user's habit row in habit table and sends back entire object again
 });
 
+router.get('/streak/:user_id/:habit_id', habitController.getHabitInfo, (req, res) => {
+  res.status(200).json(res.locals.habitInfo);
+});
+
 router.get('/streak/:user_id', habitController.getStreak, (req, res, next) => {
   res.status(200).json(res.locals.streak);
 });
