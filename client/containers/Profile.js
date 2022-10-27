@@ -18,10 +18,10 @@ const Profile = (props) => {
    */
   const [habit, setHabit] = useState({
     habit_name: 'default',
-    badge_name: 'novice',
-    points: 750,
+    badge_name: 'Novice',
+    points: 50,
     points_for_next_badge: 500,
-    streak: 0,
+    streak: 10,
   });
 
   /**
@@ -34,14 +34,14 @@ const Profile = (props) => {
    * }
    */
   const [challenges, setChallenges] = useState([
-    { challenge_name: `Meditate for 20 minutes`, description: `Try to use a meditation app and turn your mind off.`, points: 10, completed_on_last_date: false, challenge_id: 2 },
+    { challenge_name: `Meditate for 20 minutes`, description: `Try to use a meditation app and turn your mind off.`, points: 10, completed_on_last_date: true, challenge_id: 2 },
     { challenge_name: `Call a family member`, description: `It's great to lean on your support network. Call a loved one.`, points: 10, completed_on_last_date: false, challenge_id: 3 },
     { challenge_name: `Go for a run`, description: `Exercise releases dopamine. When detoxing for nicotine, your dopamine levels are low. Go raise those levels.`, points: 20, completed_on_last_date: false, challenge_id: 4 },
   ]);
 
   /**
    * Controls the state of the popup. 
-   * Popup does not appear until the users streak is greater than zero. 
+   * Popup does not appear unless the users streak is greater than zero. 
    */
   const [popup, setPopup] = useState(Boolean(habit.streak)); // if the habits streak = 0, do not display
 
@@ -51,6 +51,10 @@ const Profile = (props) => {
        * Fetch Request: Update the state of habit to streak: 0
        * Change the component so that it now only pops up and says "No streak to break."
        */
+      setHabit({
+        ...habit, 
+        streak: 0
+      })
       setPopup(false);
     } else { 
       setPopup(false);
@@ -58,7 +62,12 @@ const Profile = (props) => {
   }
 
   const checkChallenge = e => {
-    // 
+    // fetch to update points
+    // fetch to update completed_on_last_date
+    console.log(e.target);
+    const update = [ ...challenges ];
+    
+    
   }
 
   useEffect(() => {
