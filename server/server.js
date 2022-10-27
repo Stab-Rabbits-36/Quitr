@@ -18,8 +18,16 @@ app.use((req, res, next) => {
 });
 
 const userRouter = require('./routes/userRouter'); //routes requests to /api/user to userRouter
+const habitRouter = require('./routes/habitRouter')
+const badgeRouter = require('./routes/badgeRouter')
+// const challengeRouter = require('./routes/challengeRouter')
+// const metricRouter = require('./routes/metricRouter')
 
-app.use('/user', userRouter);
+app.use('/user', userRouter); //routes requests to /user to userRouter
+app.use('/habit', habitRouter); //routes requests to /habit to habitRouter
+app.use('/badge', badgeRouter);
+// app.use('/challenge', challengeRouter);
+// app.use('/metric', metricRouter);
 
 //Create catch-all error handler for unkown routes
 app.use((req, res) =>
@@ -50,4 +58,3 @@ module.exports = app; //Do we need this? yes we do
 
 // app.use('/api/user', userRouter); //routes requests to /api/user to userRouter
 
-// app.use('/api/habit', habitRouter); //routes requests to /api/habit to habitRouter
