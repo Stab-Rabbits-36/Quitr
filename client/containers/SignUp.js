@@ -30,9 +30,17 @@ const SignUp = (props) => {
       .then(data => data.json())
       .then(data => {
         if(data) {
-          //  -------------------------------------------------------
-          //  -------- FETCH AGAIN - CREATE NEW USER HABIT ----------
-          //  -------------------------------------------------------
+          fetch('/habit/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({
+              user_id: data._id, 
+              habit_id: 1,
+            })
+          }).then(data => data.json())
+            .then(data => console.log(data));
           navigate('/')
         } else {
           alert('Failed');

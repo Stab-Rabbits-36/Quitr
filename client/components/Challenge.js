@@ -10,7 +10,7 @@ const Challenge = (props) => {
     <div className='upcomingInfo'>
       <input 
         type='checkbox'
-        id={props.id}
+        id={props.index}
         checked={props.complete}
         onChange={props.check}
         />
