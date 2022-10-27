@@ -8,6 +8,10 @@ const Login = (props) => {
   const navigate = useNavigate();
   const handleSubmit = e => {
     e.preventDefault();
+    if(!userName || !userPassword) {
+      alert('Please enter a username and password.')
+      return;
+    }
     fetch('user/verification', {
       method: 'POST',
       body: JSON.stringify({
@@ -23,7 +27,7 @@ const Login = (props) => {
           props.setUser(data)
           navigate('/info');
         } else {
-          alert('Incorrect username and password.');
+          alert('Invalid username and password.');
         }
         setUserName('');
         setUserPassword('');
@@ -39,7 +43,7 @@ const Login = (props) => {
           <div id='login-boxes'>
               <div className='input-div'>
                 <input type='username'
-                placeholder='username'
+                placeholder='Username'
                 name='username'
                 className = "form-input"
                 value={userName}
@@ -48,7 +52,7 @@ const Login = (props) => {
               </div>
               <div className='input-div'>
                 <input type='password'
-                placeholder='password'
+                placeholder='Password'
                 name='password'
                 className = "form-input"
                 value={userPassword}

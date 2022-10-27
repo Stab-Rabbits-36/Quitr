@@ -2,6 +2,18 @@ const db = require('../db/dbConnection');
 
 const habitController = {};
 
+const formatDate = dateObj => {
+  //converts date object to this format: '2022/09/22 06:00' (ex)
+  const timeStamp = new Date(); //Oi, Remember that date object month is 0 based, so "09" is October
+  let hours = timeStamp.getUTCHours().toString();
+  let day = timeStamp.getUTCDate().toString();
+  let month = (timeStamp.getUTCMonth() + 1).toString();
+  const year = timeStamp.getUTCFullYear().toString();
+  if (day.length < 2) day = `0${day}`;
+  if (month.length < 2) month = `0${month}`;
+  return `${year}/${month}/${day} ${hours}:00`;
+};
+
 habitController.createHabit = async (req, res, next) => {
   try {  
     const {name, description} = req.body;
@@ -84,17 +96,7 @@ habitController.getStreak = async (req, res, next) => {
   }
 }
 
-const formatDate = dateObj => {
-  //converts date object to this format: '2022/09/22 06:00' (ex)
-  const timeStamp = new Date(); //Oi, Remember that date object month is 0 based, so "09" is October
-  let hours = timeStamp.getHours().toString();
-  let day = timeStamp.getDate().toString();
-  let month = timeStamp.getMonth().toString();
-  const year = timeStamp.getFullYear().toString();
-  if (day.length < 2) day = `0${day}`;
-  if (month.length < 2) month = `0${month}`;
-  return `${year}/${month}/${day} ${hours}:00`;
-};
+
 
 // format date and set date to today 
 habitController.restartStreak = async (req, res, next) => {

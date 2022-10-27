@@ -5,6 +5,7 @@ import CheckIn from '../components/CheckIn';
 import ChallengeContainer from './ChallengeContainer';
 import ChartContainer from './ChartContainer'
 
+
 // This is the main container that will call the backend to pass the result of that information to the child components
 const Profile = (props) => {
   /**
@@ -16,14 +17,9 @@ const Profile = (props) => {
    *   streak: number
    * }
    */
-  const [habit, setHabit] = useState({
-    habit_name: 'default',
-    badge_name: 'Novice',
-    points: 50,
-    points_for_next_badge: 500,
-    streak: 10,
-  });
 
+  const [habit, setHabit] = useState({});
+  console.log('habit: ', habit);
   /**
    * challenges - an array of 3 challenge objects with keys
    * { challenge_name: string
@@ -47,11 +43,19 @@ const Profile = (props) => {
 
   const handlePopupClick = e => {
     if(e.target.innerHTML === 'Yes'){
-      /**
-       * Fetch Request: Update the state of habit to streak: 0
-       */
+      fetch(`/habit/streak`, {
+        method: 'PATCH', 
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }, 
+        body: JSON.stringify({
+          user_id: props.user._id,
+        })
+      }).then(data => data.json())
+        .then(data => console.log(data));
       setHabit({
-        ...habit, 
+        ...habit,
+        date_started: new Date(),
         streak: 0
       })
       setPopup(false);
@@ -61,21 +65,57 @@ const Profile = (props) => {
   }
 
   const checkChallenge = e => {
-    // fetch to update points
-    // fetch to update completed_on_last_date
-    console.log(e);
-    const update = [ ...challenges ];
-    update[e.target.id].completed_on_last_date = true;
-    setChallenges(update);
+    console.log(challenges[e.target.id].points, props.user._id);
+    fetch(`/user/points`, {
+      method: 'PATCH', 
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }, 
+      body: { 
+        user_id: props.user._id,
+        points: habit.points + challenges[e.target.id].points
+      }
+    }).then(data => data.json())
+      .then(data => {
+        setHabit({
+          ...habit, 
+          points: habit.points + challenges[e.target.id].points
+        })
+        // ----- Update the challenge done to 
+        fetch(`/challenge/recent`, {
+          method: 'PATCH', 
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          }, 
+          body: {
+            user_id: props.user._id,
+            challenge_id: challenges[e.target.id].challenge_id
+          }
+        }).then(data => data.json())
+          .then(data => {
+            const update = [ ...challenges ];
+            update[e.target.id].completed_on_last_date = true;
+            setChallenges(update);
+          })
+          .catch(err => console.log(err));
+      }).catch(err => console.log(err));
   }
 
   useEffect(() => {
     fetch(`/habit/${props.user._id}`)
       .then(data => data.json())
       .then(data => {
-        setHabit(data);
-      });
+        console.log(data);
+        setHabit({
+          ...data,
+          date_started: new Date(data.date_started),
+          streak: Math.ceil(Math.abs(new Date(Date.UTC(data.date_started))- new Date(Date.UTC())) / (1000 * 60 * 60 * 24)) ? Math.ceil(Math.abs(new Date(data.date_started) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+        })
+      }).catch(err => console.log(err));
+
+    // ----------------------------------------------------
     // Fetch the challenges passing in user_id as parameter
+    // ----------------------------------------------------
   }, []);
 
   return (
