@@ -94,14 +94,17 @@ userController.createUserChallenges = async (req, res, next) => {
   try {
     const {user_id} = req.body;
     const now = dateHelper.formatDate();
-    const challenge_ids = await db.query(`SELECT _id FROM challenges`);
-    console.log(challenge_ids);
-    for(let i = 0; i < challenge_ids.rows; i++){
-      const insert = `INSERT INTO public.user_challenges VALUES (DEFAULT, ${user_id}, ${challenge_ids[i]}, 0, null, false) RETURNING *;`;
-      const values = [user_id, challenge_ids[i]];
-      const { rows } = await db.query(insert);
-    }
-    return next();
+    db.query(`SELECT _id FROM public.challenges`)
+      .then(data => {
+        console.log(data.rows);
+        let insert = `INSERT INTO public.user_challenges VALUES `;
+        for(let i = 0; i < data.rows.length; i++){
+          insert += `(DEFAULT, ${user_id}, ${data.rows[i]._id}, 0, null, false),`;
+        }
+        insert = insert.substring(0, insert.length - 1) + ';'
+        db.query(insert).then(data => next())
+
+      });
   } catch (error) {
     return next({
       status: error.status,
