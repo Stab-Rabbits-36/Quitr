@@ -23,7 +23,7 @@ router.post('/createChallenges', userController.createUserChallenges, (req, res)
 })
 
 router.patch('/points', userController.updatePoints, (req, res) => {
-  return res.sendStatus(200);
+  return res.status(200).json(true);
 })
 
 router.get('/', userController.getUser, (req, res, next) => {

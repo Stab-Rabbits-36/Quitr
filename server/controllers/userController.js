@@ -118,11 +118,11 @@ userController.createUserChallenges = async (req, res, next) => {
 
 userController.updatePoints = async (req, res, next) => {
   try {
-
+    console.log('here');
     const {user_id, points} = req.body;
     const update = `UPDATE public.user_habits SET points = $2 WHERE user_id = $1 RETURNING *`
     const values = [user_id, points]
-    const { rows } = await db.query(update, values);
+    await db.query(update, values)
     return next();
   } catch (error) {
     return next({

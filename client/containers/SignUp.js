@@ -30,7 +30,7 @@ const SignUp = (props) => {
       .then(data => data.json())
       .then(data => {
         if(data) {
-          fetch('/user/habit', {
+          fetch('/user/createHabit', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json; charset=UTF-8'
@@ -40,8 +40,20 @@ const SignUp = (props) => {
               habit_id: 1,
             })
           }).then(data => data.json())
-            .then(data => console.log(data));
-          navigate('/')
+            .then(data => {
+              fetch('/user/createChallenges', { 
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json; charset=UTF-8'
+                },
+                body: JSON.stringify({
+                  user_id: data._id, 
+                })
+              }).then(data => {
+                console.log(data);
+                navigate('/');
+              })
+            });
         } else {
           alert('Failed');
         }

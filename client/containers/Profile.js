@@ -65,17 +65,20 @@ const Profile = (props) => {
   }
 
   const checkChallenge = e => {
-    console.log(challenges[e.target.id].points, props.user._id);
+    console.log('challenges', challenges);
+    console.log('id', e.target.id);
+    console.log('habit', habit);
+
     fetch(`/user/points`, {
       method: 'PATCH', 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       }, 
-      body: { 
+      body: JSON.stringify({ 
         user_id: props.user._id,
         points: habit.points + challenges[e.target.id].points
-      }
-    }).then(data => data.json())
+      })
+    }).then(data=>data.json())
       .then(data => {
         setHabit({
           ...habit, 
@@ -87,10 +90,10 @@ const Profile = (props) => {
           headers: {
             'Content-Type': 'application/json; charset=UTF-8'
           }, 
-          body: {
+          body: JSON.stringify({
             user_id: props.user._id,
-            challenge_id: challenges[e.target.id].challenge_id
-          }
+            challenge_id: challenges[e.target.id]['challenge_id']
+          })
         }).then(data => data.json())
           .then(data => {
             const update = [ ...challenges ];
@@ -111,11 +114,13 @@ const Profile = (props) => {
           date_started: new Date(data.date_started),
           streak: Math.ceil(Math.abs(new Date(Date.UTC(data.date_started))- new Date(Date.UTC())) / (1000 * 60 * 60 * 24)) ? Math.ceil(Math.abs(new Date(data.date_started) - new Date()) / (1000 * 60 * 60 * 24)) : 0
         })
+        fetch(`/challenge/recent/${props.user._id}`)
+          .then(data => data.json())
+          .then(data => {
+            console.log(data);
+            setChallenges(data);
+          })
       }).catch(err => console.log(err));
-
-    // ----------------------------------------------------
-    // Fetch the challenges passing in user_id as parameter
-    // ----------------------------------------------------
   }, []);
 
   return (

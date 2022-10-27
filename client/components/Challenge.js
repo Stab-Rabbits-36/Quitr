@@ -11,6 +11,7 @@ const Challenge = (props) => {
       <input 
         type='checkbox'
         id={props.index}
+        className={props.complete}
         checked={props.complete}
         onChange={props.check}
         />

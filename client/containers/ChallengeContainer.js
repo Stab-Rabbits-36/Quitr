@@ -28,7 +28,7 @@ const ChallengeContainer = (props) => {
       <div>
         {props.challenges.map((e,i)=> {
             return(
-              <Challenge check={props.check} key={'c' + i.toString()} index={i} description={e.description} id={e.challenge_id} challengeName={e.challenge_name} complete={e.completed_on_last_date} />
+              <Challenge check={props.check} key={'c' + i.toString()} index={i} description={e.description} id={e.challenge_id} challengeName={e.name} complete={e.completed_on_last_date} />
             )
           })
         }

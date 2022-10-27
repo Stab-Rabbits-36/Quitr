@@ -6,7 +6,7 @@ const challengeController = {};
 challengeController.getChallenges = async (req, res, next) => {
   try {
     const {user_id} = req.params;
-    const search = `SELECT * from public.user_challenges WHERE user_id = ${user_id} AND last_date_assigned = '${dateHelper.formatDate()}'`
+    const search = `SELECT uc.challenge_id, uc._id, uc.last_date_assigned, uc.completed_on_last_date, c.description, c.points, c.name FROM public.user_challenges uc LEFT OUTER JOIN challenges c ON uc.challenge_id = c._id WHERE user_id = ${user_id} AND last_date_assigned = '${dateHelper.formatDate()}'`
     db.query(search)
       .then(data => {
         res.locals.threeChallenges = data.rows;
@@ -43,10 +43,11 @@ challengeController.getChallenges = async (req, res, next) => {
 
 challengeController.updateDate = async (req, res, next) => {
   try {
-    const {user_id, completed_on_last_date} = req.body;
-    const update = `UPDATE user_challenges SET completed_on_last_date = true WHERE user_id = $1`;
-    const values = [user_id];
-    await db.query(update, values);
+    const {user_id, challenge_id} = req.body;
+    console.log('here');
+    const update = `UPDATE user_challenges SET completed_on_last_date = true WHERE user_id = $1 AND challenge_id = $2`;
+    const values = [user_id, challenge_id];
+    await db.query(update, values)
     return next();
   } catch (error) {
     return next({
