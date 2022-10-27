@@ -30,7 +30,7 @@ const SignUp = (props) => {
       .then(data => data.json())
       .then(data => {
         if(data) {
-          fetch('/habit/create', {
+          fetch('/user/habit', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json; charset=UTF-8'

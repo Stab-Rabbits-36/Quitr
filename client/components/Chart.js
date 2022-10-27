@@ -9,10 +9,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
   radius: '50%',
-  labels: ['Novice', 'Apprentice', 'Master', 'Jedi'],
+  labels: ['Acolyte', 'Padawan', 'Jedi Knight', 'Jedi Master'],
   datasets: [
     {
-      data: [1, 2, 4, 8],
+      data: [1, 1, 1, 1],
       backgroundColor: [
         'rgba(238, 128, 91, 0.5)',
         'rgba(63, 81, 120, 0.5)',

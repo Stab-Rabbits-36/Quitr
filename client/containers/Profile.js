@@ -49,7 +49,6 @@ const Profile = (props) => {
     if(e.target.innerHTML === 'Yes'){
       /**
        * Fetch Request: Update the state of habit to streak: 0
-       * Change the component so that it now only pops up and says "No streak to break."
        */
       setHabit({
         ...habit, 
@@ -71,7 +70,11 @@ const Profile = (props) => {
   }
 
   useEffect(() => {
-    // Fetch the habit passing in user_id, habit_id as parameters/etc
+    fetch(`/habit/${props.user._id}`)
+      .then(data => data.json())
+      .then(data => {
+        setHabit(data);
+      });
     // Fetch the challenges passing in user_id as parameter
   }, []);
 
@@ -80,7 +83,7 @@ const Profile = (props) => {
       {habit.streak ? <CheckIn streak={habit.streak} seen={popup} set={handlePopupClick} />:null}
       <InformationHeader setPopup={setPopup} userBadge={habit.badge_name} user={props.user} habit={habit} />
       <div className="infoBody">
-          <ChallengeContainer check={checkChallenge} challenges={challenges} /> 
+          <ChallengeContainer check={checkChallenge} challenges={challenges} points={habit.points} /> 
           <ChartContainer points={habit.points} />
       </div> 
     </div>
