@@ -20,7 +20,7 @@ router.get('/:user_id', habitController.getHabit, (req, res, next) => {
   res.status(200).json(res.locals.habit); //sends back object of user's habit info + quitLength (days difference between now and quit start date)
 });
 
-router.patch('/streak', habitController.updateStreak, (req, res) => {
+router.patch('/streak', habitController.restartStreak, (req, res) => {
   return res.sendStatus(200);
 })
 

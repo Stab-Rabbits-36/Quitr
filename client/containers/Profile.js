@@ -5,6 +5,7 @@ import CheckIn from '../components/CheckIn';
 import ChallengeContainer from './ChallengeContainer';
 import ChartContainer from './ChartContainer'
 
+
 // This is the main container that will call the backend to pass the result of that information to the child components
 const Profile = (props) => {
   /**
@@ -16,14 +17,9 @@ const Profile = (props) => {
    *   streak: number
    * }
    */
-  const [habit, setHabit] = useState({
-    habit_name: 'default',
-    badge_name: 'novice',
-    points: 750,
-    points_for_next_badge: 500,
-    streak: 0,
-  });
 
+  const [habit, setHabit] = useState({});
+  console.log('habit: ', habit);
   /**
    * challenges - an array of 3 challenge objects with keys
    * { challenge_name: string
@@ -34,23 +30,34 @@ const Profile = (props) => {
    * }
    */
   const [challenges, setChallenges] = useState([
-    { challenge_name: `Meditate for 20 minutes`, description: `Try to use a meditation app and turn your mind off.`, points: 10, completed_on_last_date: false, challenge_id: 2 },
+    { challenge_name: `Meditate for 20 minutes`, description: `Try to use a meditation app and turn your mind off.`, points: 10, completed_on_last_date: true, challenge_id: 2 },
     { challenge_name: `Call a family member`, description: `It's great to lean on your support network. Call a loved one.`, points: 10, completed_on_last_date: false, challenge_id: 3 },
     { challenge_name: `Go for a run`, description: `Exercise releases dopamine. When detoxing for nicotine, your dopamine levels are low. Go raise those levels.`, points: 20, completed_on_last_date: false, challenge_id: 4 },
   ]);
 
   /**
    * Controls the state of the popup. 
-   * Popup does not appear until the users streak is greater than zero. 
+   * Popup does not appear unless the users streak is greater than zero. 
    */
   const [popup, setPopup] = useState(Boolean(habit.streak)); // if the habits streak = 0, do not display
 
   const handlePopupClick = e => {
     if(e.target.innerHTML === 'Yes'){
-      /**
-       * Fetch Request: Update the state of habit to streak: 0
-       * Change the component so that it now only pops up and says "No streak to break."
-       */
+      fetch(`/habit/streak`, {
+        method: 'PATCH', 
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }, 
+        body: JSON.stringify({
+          user_id: props.user._id,
+        })
+      }).then(data => data.json())
+        .then(data => console.log(data));
+      setHabit({
+        ...habit,
+        date_started: new Date(),
+        streak: 0
+      })
       setPopup(false);
     } else { 
       setPopup(false);
@@ -58,12 +65,57 @@ const Profile = (props) => {
   }
 
   const checkChallenge = e => {
-    // 
+    console.log(challenges[e.target.id].points, props.user._id);
+    fetch(`/user/points`, {
+      method: 'PATCH', 
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }, 
+      body: { 
+        user_id: props.user._id,
+        points: habit.points + challenges[e.target.id].points
+      }
+    }).then(data => data.json())
+      .then(data => {
+        setHabit({
+          ...habit, 
+          points: habit.points + challenges[e.target.id].points
+        })
+        // ----- Update the challenge done to 
+        fetch(`/challenge/recent`, {
+          method: 'PATCH', 
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          }, 
+          body: {
+            user_id: props.user._id,
+            challenge_id: challenges[e.target.id].challenge_id
+          }
+        }).then(data => data.json())
+          .then(data => {
+            const update = [ ...challenges ];
+            update[e.target.id].completed_on_last_date = true;
+            setChallenges(update);
+          })
+          .catch(err => console.log(err));
+      }).catch(err => console.log(err));
   }
 
   useEffect(() => {
-    // Fetch the habit passing in user_id, habit_id as parameters/etc
+    fetch(`/habit/${props.user._id}`)
+      .then(data => data.json())
+      .then(data => {
+        console.log(data);
+        setHabit({
+          ...data,
+          date_started: new Date(data.date_started),
+          streak: Math.ceil(Math.abs(new Date(Date.UTC(data.date_started))- new Date(Date.UTC())) / (1000 * 60 * 60 * 24)) ? Math.ceil(Math.abs(new Date(data.date_started) - new Date()) / (1000 * 60 * 60 * 24)) : 0
+        })
+      }).catch(err => console.log(err));
+
+    // ----------------------------------------------------
     // Fetch the challenges passing in user_id as parameter
+    // ----------------------------------------------------
   }, []);
 
   return (

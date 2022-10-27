@@ -18,17 +18,17 @@ const ChallengeContainer = (props) => {
       setUserBadges([imgArray[0], imgArray[1]])
     }else if(points > 499 && points < 750){
       setUserBadges([imgArray[0], imgArray[1], imgArray[2]])
-    }else if(points >=750){
+    }else if(points >= 750){
       setUserBadges([imgArray[0], imgArray[1], imgArray[2], imgArray[3]])
     }
-  }, []);
+  }, [props.points]);
   return(
     <div className='leftInfoBody'>
       <h2>Log Your Challenges</h2>
       <div>
-        {props.challenges.map(e => {
+        {props.challenges.map((e,i)=> {
             return(
-              <Challenge description={e.description} id={e.challenge_id} challengeName={e.challenge_name} completeDate={e.completed_on_last_date} />
+              <Challenge check={props.check} key={'c' + i.toString()} index={i} description={e.description} id={e.challenge_id} challengeName={e.challenge_name} complete={e.completed_on_last_date} />
             )
           })
         }

@@ -8,13 +8,13 @@ const Challenge = (props) => {
 
   return(
     <div className='upcomingInfo'>
-        <label className='challengeLabel'>
-          <input className='checkbox'
-          type='checkbox'
-          checked={checked}
-          onChange={e => setChecked(e.target.checked)}
-          />{props.challengeName}
-        </label>
+      <input 
+        type='checkbox'
+        id={props.index}
+        checked={props.complete}
+        onChange={props.check}
+        />
+        <label>{props.challengeName}</label>
     </div>
   )
 };

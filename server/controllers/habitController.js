@@ -2,6 +2,18 @@ const db = require('../db/dbConnection');
 
 const habitController = {};
 
+const formatDate = dateObj => {
+  //converts date object to this format: '2022/09/22 06:00' (ex)
+  const timeStamp = new Date(); //Oi, Remember that date object month is 0 based, so "09" is October
+  let hours = timeStamp.getUTCHours().toString();
+  let day = timeStamp.getUTCDate().toString();
+  let month = (timeStamp.getUTCMonth() + 1).toString();
+  const year = timeStamp.getUTCFullYear().toString();
+  if (day.length < 2) day = `0${day}`;
+  if (month.length < 2) month = `0${month}`;
+  return `${year}/${month}/${day} ${hours}:00`;
+};
+
 habitController.createHabit = async (req, res, next) => {
   try {  
     const {name, description} = req.body;
@@ -47,9 +59,11 @@ habitController.createHabit = async (req, res, next) => {
 habitController.getHabit = async (req, res, next) => {
   try {
       const {user_id} = req.params;
-      const queryString = `SELECT * FROM public.habits WHERE name = $1`;
+      const queryString = `SELECT * FROM public.user_habits WHERE user_id = $1`;
+      console.log(queryString);
       const values = [user_id];
       const { rows } = await db.query(queryString, values);
+      console.log(rows);
       res.locals.habit = rows[0];
       return next();
   } catch (error) {
@@ -82,11 +96,15 @@ habitController.getStreak = async (req, res, next) => {
   }
 }
 
-habitController.updateStreak = async (req, res, next) => {
+
+
+// format date and set date to today 
+habitController.restartStreak = async (req, res, next) => {
   try {
-    const {user_id, streak} = req.body;
-    const update = `UPDATE public.user_habits SET streak = $2 WHERE user_id = $1`
-    const values = [user_id, streak];
+    const { user_id } = req.body;
+    const date = formatDate();
+    const update = `UPDATE public.user_habits SET date_started = $2, streak = 0 WHERE user_id = $1`
+    const values = [user_id, date];
     const { rows } = await db.query(update, values);
     return next();
   } catch (error) {
