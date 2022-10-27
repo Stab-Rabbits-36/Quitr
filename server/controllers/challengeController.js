@@ -4,6 +4,10 @@ const challengeController = {};
 
 challengeController.getChallenge = async (req, res, next) => {
   try {
+    // look for three challenges that have todays date
+    // if present, return those challenges
+    // otherwise, pick 3 challenges and change the date to today and the completed_on_last_date variable to false
+    
     const {user_id} = req.params;
     
     return next();

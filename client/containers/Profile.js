@@ -49,8 +49,11 @@ const Profile = (props) => {
     if(e.target.innerHTML === 'Yes'){
       /**
        * Fetch Request: Update the state of habit to streak: 0
-       * Change the component so that it now only pops up and says "No streak to break."
        */
+      fetch(`/habit/`, {
+        method: 'PATCH',
+        
+      })
       setHabit({
         ...habit, 
         streak: 0
@@ -71,7 +74,11 @@ const Profile = (props) => {
   }
 
   useEffect(() => {
-    // Fetch the habit passing in user_id, habit_id as parameters/etc
+    fetch(`/habit/${props.user._id}`)
+      .then(data => data.json())
+      .then(data => {
+        setHabit(data);
+      });
     // Fetch the challenges passing in user_id as parameter
   }, []);
 
