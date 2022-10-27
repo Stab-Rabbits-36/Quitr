@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import '../styles/form.scss';
-import Chart from '../Components/Chart'
+import Chart from '../components/Chart'
 
 const ChartContainer = (props) => {
 
