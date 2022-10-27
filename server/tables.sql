@@ -47,8 +47,8 @@ CREATE TABLE public.user_habits (
   "habit_id" integer NOT NULL,
   "badge_id" integer NOT NULL,
   "date_started" timestamp,
-  "points" integer NOT NULL,
-  "streaks" integer NOT NULL,
+  "points" integer NOT NULL, -- how many points user accrued
+  "streak" integer NOT NULL, -- changed 'streaks' to 'streak'
   CONSTRAINT "user_habits_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -67,7 +67,7 @@ CREATE TABLE public.challenges (
   "_id" serial NOT NULL,
   "name" varchar NOT NULL,
   "description" varchar NOT NULL,
-  "points" integer NOT NULL,
+  "points" integer NOT NULL, -- how many points each challenge is worth
   CONSTRAINT "challenges_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -113,14 +113,6 @@ INSERT INTO public.badges VALUES (5, 'Level 5', 1000);
 INSERT INTO public.habits VALUES (1, 'Nicotine', 'Nicotine dependence occurs when you need nicotine and cannot stop using it.');
 
 -- STRETCH FEATURE: cigarettes per day for name
-
-CREATE TABLE public.habits (
-  "_id" serial NOT NULL,
-  "name" varchar NOT NULL,
-  "description" varchar NOT NULL,
-  CONSTRAINT "habits_pk" PRIMARY KEY ("_id")    
-) WITH (
-
 
 -- INSERT public.users VALUES(1, "da568", "1234", "Daniel", "An")
 

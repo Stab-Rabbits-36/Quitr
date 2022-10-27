@@ -78,7 +78,7 @@ userController.createUserHabit = async (req, res, next) => {
     console.log('got to before 2nd db.query')
     const { rows } = await db.query(queryString, values);
     console.log('got past 2nd db query')
-    res.locals.user = rows[0];
+    res.locals.userHabits = rows[0];
     console.log('got to end of createUserHabit');
     return next();
   } catch (error) {
@@ -88,6 +88,23 @@ userController.createUserHabit = async (req, res, next) => {
         err: error.message,
       },
       log: `An error occurred in userController.createUserHabit. Check server logs for more details - ${error.log}`,
+    });
+  }
+};
+
+userController.updatePoints = async (req, res, next) => {
+  try {
+    const {user_id, points} = req.body;
+    const update = `UPDATE public.user_habits SET points = ${points} WHERE user_id = $1`
+    await db.query(update);
+    return next();
+  } catch (error) {
+    return next({
+      status: error.status,
+      message: {
+        err: error.message,
+      },
+      log: `An error occurred in userController.updatePoints. Check server logs for more details - ${error.log}`,
     });
   }
 };
