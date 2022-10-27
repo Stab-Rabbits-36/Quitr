@@ -66,7 +66,7 @@ const Profile = (props) => {
 
   const checkChallenge = e => {
     console.log(challenges[e.target.id].points, props.user._id);
-    fetch(`/user/points`, {
+    if(challenges[e.target.id].completed_on_last_date)(`/user/points`, {
       method: 'PATCH', 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
@@ -113,9 +113,6 @@ const Profile = (props) => {
         })
       }).catch(err => console.log(err));
 
-    // ----------------------------------------------------
-    // Fetch the challenges passing in user_id as parameter
-    // ----------------------------------------------------
   }, []);
 
   return (
@@ -127,7 +124,6 @@ const Profile = (props) => {
           <ChartContainer points={habit.points} />
       </div> 
     </div>
-     
   );
 };
 
