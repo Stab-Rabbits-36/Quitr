@@ -8,6 +8,10 @@ router.post('/create', habitController.createHabit, (req, res) => {
   res.status(200).json(res.locals.habit); //creates a user's habit row in habit table and sends back entire object again
 });
 
+router.get('/streak/:user_id/:habit_id', habitController.getHabitInfo, (req, res) => {
+  res.status(200).json(res.locals.habitInfo);
+});
+
 router.get('/streak/:user_id', habitController.getStreak, (req, res, next) => {
   res.status(200).json(res.locals.streak);
 });
@@ -16,6 +20,9 @@ router.get('/:user_id', habitController.getHabit, (req, res, next) => {
   res.status(200).json(res.locals.habit); //sends back object of user's habit info + quitLength (days difference between now and quit start date)
 });
 
+router.patch('/streak', habitController.updateStreak, (req, res) => {
+  return res.sendStatus(200);
+})
 
 // router.post('/checkin', habitController.checkIn, (req, res) => {
 //   //on click of check in button

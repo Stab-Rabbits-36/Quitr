@@ -19,7 +19,7 @@ userController.createUser = async (req, res, next) => {
       log: `Usercontroller.js: ERROR: ${err}`,
       status: 400,
       message: {
-        err: `An error occurred in userController.createUser. Check server logs for more details - ${error.log}`,
+        err: `An error occurred in userController.createUser. Check server logs for more details - ${error}`,
       },
     });
   }
@@ -41,7 +41,7 @@ userController.verifyUser = async (req, res, next) => {
       message: {
         err: error.message,
       },
-      log: `An error occurred in userController.getUser. Check server logs for more details - ${error.log}`,
+      log: `An error occurred in userController.getUser. Check server logs for more details - ${error}`,
     });
   }
 };
@@ -60,26 +60,58 @@ userController.getUser = async (req, res, next) => {
       message: {
         err: error.message,
       },
-      log: `An error occurred in userController.getUser. Check server logs for more details - ${error.log}`,
+      log: `An error occurred in userController.getUser. Check server logs for more details - ${error}`,
     });
   }
 };
 
+const formatDate = dateObj => {
+  //converts date object to this format: '2022/09/22 06:00' (ex)
+  const timeStamp = new Date(); //Oi, Remember that date object month is 0 based, so "09" is October
+  let hours = timeStamp.getHours().toString();
+  let day = timeStamp.getDate().toString();
+  let month = timeStamp.getMonth().toString();
+  const year = timeStamp.getFullYear().toString();
+  if (day.length < 2) day = `0${day}`;
+  if (month.length < 2) month = `0${month}`;
+  return `${year}/${month}/${day} ${hours}:00`;
+};
+
+const calculateDayDiff = (oldDate, newDate) => {
+  //calculates difference down to the day & hour between formatted dates innit
+  //returns an object!
+  //format: (ex) '2022/09/22 06:00'
+  const oldDateDay = Number(oldDate[8] + oldDate[9]);
+  const newDateDay = Number(newDate[8] + newDate[9]);
+
+  const oldDateMonth = Number(oldDate[5] + oldDate[6]);
+  const newDateMonth = Number(newDate[5] + newDate[6]);
+
+  const oldDateHour = Number(oldDate[11] + oldDate[12]);
+  const newDateHour = Number(newDate[11] + newDate[12]);
+
+  const hourDifference = newDateHour - oldDateHour;
+  const daysDifference = newDateDay - oldDateDay;
+  const monthDifference = newDateMonth - oldDateMonth;
+
+  return {
+    days: daysDifference + monthDifference * 30,
+    hours: hourDifference,
+  };
+};
+
 userController.createUserHabit = async (req, res, next) => {
   try {
-    console.log('entering createUserHabit');
     const {user_id, habit_id} = req.body;
-    const insert = `INSERT INTO public.user_habits VALUES (${user_id}, ${habit_id}, 1, ${Date.now()}, 0, 0);`; // setting novice as badge_id = 1 which will be our lowest level
+    const now = formatDate(new Date());
+    const insert = `INSERT INTO public.user_habits VALUES (DEFAULT, ${user_id}, ${habit_id}, '${now}', 0, 0);`;
     const values = [user_id, habit_id];
     await db.query(insert);
-    console.log('got past query')
-    const queryString = `SELECT * FROM public.user_habits WHERE user_id = $1;`;
-    console.log(queryString);
-    console.log('got to before 2nd db.query')
-    const { rows } = await db.query(queryString, values);
+    const queryString = `SELECT * FROM public.user_habits WHERE user_id = $1 AND habit_id = $2;`;
+    console.log('queryString ' + queryString);
+    const { rows } = await db.query(queryString, values); //TODO: breaking
     console.log('got past 2nd db query')
-    res.locals.user = rows[0];
-    console.log('got to end of createUserHabit');
+    res.locals.userHabits = rows[0];
     return next();
   } catch (error) {
     return next({
@@ -87,7 +119,26 @@ userController.createUserHabit = async (req, res, next) => {
       message: {
         err: error.message,
       },
-      log: `An error occurred in userController.createUserHabit. Check server logs for more details - ${error.log}`,
+      log: `An error occurred in userController.createUserHabit. Check server logs for more details - ${error}`,
+    });
+  }
+};
+
+userController.updatePoints = async (req, res, next) => {
+  try {
+    const {user_id, points} = req.body;
+    const update = `UPDATE public.user_habits SET points = $2 WHERE user_id = $1 RETURNING *`
+    const values = [user_id, points]
+    const { rows } = await db.query(update, values);
+    // console.log(rows[0]);
+    return next();
+  } catch (error) {
+    return next({
+      status: error.status,
+      message: {
+        err: error.message,
+      },
+      log: `An error occurred in userController.updatePoints. Check server logs for more details - ${error.log}`,
     });
   }
 };

@@ -19,15 +19,13 @@ app.use((req, res, next) => {
 
 const userRouter = require('./routes/userRouter'); //routes requests to /api/user to userRouter
 const habitRouter = require('./routes/habitRouter')
-const badgeRouter = require('./routes/badgeRouter')
-// const challengeRouter = require('./routes/challengeRouter')
-// const metricRouter = require('./routes/metricRouter')
+const challengeRouter = require('./routes/challengeRouter')
+// const metricRouter = require('./routes/metricRouter'); // stretch feature
 
 app.use('/user', userRouter); //routes requests to /user to userRouter
-app.use('/habit', habitRouter); //routes requests to /habit to habitRouter
-app.use('/badge', badgeRouter);
-// app.use('/challenge', challengeRouter);
-// app.use('/metric', metricRouter);
+app.use('/habit', habitRouter);
+app.use('/challenge', challengeRouter);
+// app.use('/metric', metricRouter); // stretch feature
 
 //Create catch-all error handler for unkown routes
 app.use((req, res) =>
