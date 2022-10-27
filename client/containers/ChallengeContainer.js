@@ -11,7 +11,7 @@ const ChallengeContainer = (props) => {
   console.log(badges);
   useEffect(() => {
     const imgArray = ['https://cdn.discordapp.com/attachments/1022845969076850760/1035215304084697148/acolyte-resize-crop.png', 'https://cdn.discordapp.com/attachments/1022845969076850760/1035216286227120208/padawan-resize-crop.png', 'https://cdn.discordapp.com/attachments/1022845969076850760/1035217454022004736/jedi-knight-resize-crop.png', 'https://cdn.discordapp.com/attachments/1022845969076850760/1035217454537916446/jedi-master-resize-crop.png'];
-    const {points} = props.habit;
+    const points = props.points;
     if(points > 0 && points < 250){
       setUserBadges([imgArray[0]])
     }else if(points > 249 && points < 500){

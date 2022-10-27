@@ -19,7 +19,7 @@ const Profile = (props) => {
   const [habit, setHabit] = useState({
     habit_name: 'default',
     badge_name: 'novice',
-    points: 550,
+    points: 750,
     points_for_next_badge: 500,
     streak: 0,
   });
