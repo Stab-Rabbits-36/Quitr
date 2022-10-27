@@ -10,9 +10,9 @@ const ChallengeContainer = (props) => {
     <div className='leftInfoBody'>
       <h2>Log Your Challenges</h2>
       <div>
-        {props.challenges.map(e => {
+        {props.challenges.map((e,i)=> {
             return(
-              <Challenge description={e.description} id={e.challenge_id} challengeName={e.challenge_name} completeDate={e.completed_on_last_date} />
+              <Challenge check={props.check} key={'c' + i.toString()} index={i} description={e.description} id={e.challenge_id} challengeName={e.challenge_name} complete={e.completed_on_last_date} />
             )
           })
         }
