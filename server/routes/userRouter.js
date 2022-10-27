@@ -14,8 +14,12 @@ router.post('/verification', userController.verifyUser, (req, res) => {
   return res.status(201).json(res.locals.user);
 });
 
-router.post('/habit', userController.createUserHabit, (req, res) => {
+router.post('/createHabit', userController.createUserHabit, (req, res) => {
  return res.status(201).json(res.locals.userHabits);
+})
+
+router.post('/createChallenges', userController.createUserChallenges, (req, res) => {
+  return res.status(201).json(res.locals.userChallenges);
 })
 
 router.patch('/points', userController.updatePoints, (req, res) => {
