@@ -65,43 +65,43 @@ const Profile = (props) => {
   }
 
   const checkChallenge = e => {
-    console.log('challenges', challenges);
-    console.log('id', e.target.id);
-    console.log('habit', habit);
-
-    fetch(`/user/points`, {
-      method: 'PATCH', 
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
-      }, 
-      body: JSON.stringify({ 
-        user_id: props.user._id,
-        points: habit.points + challenges[e.target.id].points
-      })
-    }).then(data=>data.json())
-      .then(data => {
-        setHabit({
-          ...habit, 
+    console.log(challenges[e.target.id].points, props.user._id);
+    if(!challenges[e.target.id].completed_on_last_date){
+      fetch(`/user/points`, {
+        method: 'PATCH', 
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        }, 
+        body: { 
+          user_id: props.user._id,
           points: habit.points + challenges[e.target.id].points
-        })
-        // ----- Update the challenge done to 
-        fetch(`/challenge/recent`, {
-          method: 'PATCH', 
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-          }, 
-          body: JSON.stringify({
-            user_id: props.user._id,
-            challenge_id: challenges[e.target.id]['challenge_id']
+        }
+      }).then(data => data.json())
+        .then(data => {
+          setHabit({
+            ...habit, 
+            points: habit.points + challenges[e.target.id].points
           })
-        }).then(data => data.json())
-          .then(data => {
-            const update = [ ...challenges ];
-            update[e.target.id].completed_on_last_date = true;
-            setChallenges(update);
-          })
-          .catch(err => console.log(err));
-      }).catch(err => console.log(err));
+          // ----- Update the challenge done to 
+          fetch(`/challenge/recent`, {
+            method: 'PATCH', 
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }, 
+            body: {
+              user_id: props.user._id,
+              challenge_id: challenges[e.target.id].challenge_id
+            }
+          }).then(data => data.json())
+            .then(data => {
+              const update = [ ...challenges ];
+              update[e.target.id].completed_on_last_date = true;
+              setChallenges(update);
+            })
+            .catch(err => console.log(err));
+        }).catch(err => console.log(err));
+    }
+   
   }
 
   useEffect(() => {
@@ -121,6 +121,10 @@ const Profile = (props) => {
             setChallenges(data);
           })
       }).catch(err => console.log(err));
+
+    // ----------------------------------------------------
+    // Fetch the challenges passing in user_id as parameter
+    // ----------------------------------------------------
   }, []);
 
   return (
@@ -132,7 +136,6 @@ const Profile = (props) => {
           <ChartContainer points={habit.points} />
       </div> 
     </div>
-     
   );
 };
 
