@@ -10,7 +10,7 @@ router.get('/recent/:user_id', challengeController.getChallenges, (req, res) => 
 });
 
 router.patch('/recent', challengeController.updateDate, (req, res) => {
-    res.sendStatus(200)
+    return res.status(200).json(true);
   });
 
 module.exports = router;
